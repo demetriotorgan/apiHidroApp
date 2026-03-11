@@ -1,8 +1,8 @@
 const hidrometroModel = require('../models/hidrometroSchema')
 
-module.exports.salvarLeitura = async(req,res)=>{
+module.exports.salvarHidrometro = async(req,res)=>{
     try {
-        const {data, horario, leitura, obs} = req.body
+        const {data, horario, leitura, obs} = req.body;
         const novaLeitura = await hidrometroModel.create({data, horario, leitura, obs});
         console.log('Leitura salva com sucesso');
         console.log(novaLeitura);
@@ -13,7 +13,7 @@ module.exports.salvarLeitura = async(req,res)=>{
     }
 };
 
-module.exports.exibirLeituras = async(req,res)=>{
+module.exports.exibirHidrometros = async(req,res)=>{
     try {
         const leituras = await hidrometroModel.find().sort({data:-1}); //Ordem para os mais recentes
         res.status(200).json(leituras);
@@ -23,7 +23,7 @@ module.exports.exibirLeituras = async(req,res)=>{
     }
 };
 
-module.exports.deletarLeitura = async(req,res)=>{
+module.exports.deletarHidrometro = async(req,res)=>{
     const {id} = req.params;
     try {
         const deletado = await hidrometroModel.findByIdAndDelete(id);

@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const { salvarLeitura, exibirLeituras, deletarLeitura } = require('../controllers/hidrometroController');
+const { exibirHidrometros, salvarHidrometro, deletarHidrometro } = require('../controllers/hidrometroController');
 
 const router = Router();
 
-router.post('/save', salvarLeitura);
-router.get('/listar', exibirLeituras);
-router.delete('/deletar/:id', deletarLeitura);
+router.post('/saveHidrometro', salvarHidrometro);
+router.get('/listarHidrometro', exibirHidrometros);
+router.delete('/deletarHidrometro/:id', deletarHidrometro);
 
 module.exports = router;

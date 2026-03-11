@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const routes = require('./routes/hidrometroRoutes');
+const routesHidrometro = require('./routes/hidrometroRoutes');
+const routesPluviometro = require('./routes/pluviometroRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,5 +24,5 @@ app.use((req,res, next)=>{
     .then(()=>console.log('Conectado ao MongoDB com sucesso!'))
     .catch((err)=>console.log(err));
 
-app.use('/', routes);
+app.use('/', routesHidrometro, routesPluviometro);
 app.listen(PORT, ()=>console.log(`Rodando na porta ${PORT}`));
