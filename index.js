@@ -15,6 +15,9 @@ app.use(cors({ origin: '*' }));
 
 // conecta no banco
 connectDB();
+app.get('/', (req, res) => {
+  res.json({ mensagem: 'HidroAPI funcionando' });
+});
 
 app.use('/', routesHidrometro, routesPluviometro, routesTambor);
 
