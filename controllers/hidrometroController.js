@@ -30,7 +30,7 @@ module.exports.deletarHidrometro = async(req,res)=>{
         if(!deletado){
             return res.status(404).json({erro:'Registro não encontrado'})
         }
-        res.status(200).json({messagem: 'Leitura deletada com sucesso', deletado});
+        res.status(200).json({menssagem: 'Leitura deletada com sucesso', deletado});
     } catch (error) {
         console.error('Erro ao deletar leitura: ', error);
         res.status(500).json({erro:'Erro ao deletar leitura'});

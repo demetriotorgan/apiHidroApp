@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const routesHidrometro = require('./routes/hidrometroRoutes');
 const routesPluviometro = require('./routes/pluviometroRoutes');
+const routesTambor = require('./routes/tamborRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,5 +25,5 @@ app.use((req,res, next)=>{
     .then(()=>console.log('Conectado ao MongoDB com sucesso!'))
     .catch((err)=>console.log(err));
 
-app.use('/', routesHidrometro, routesPluviometro);
+app.use('/', routesHidrometro, routesPluviometro, routesTambor);
 app.listen(PORT, ()=>console.log(`Rodando na porta ${PORT}`));
