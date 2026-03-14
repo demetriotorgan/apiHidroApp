@@ -26,6 +26,10 @@ mongoose
 .then(()=>console.log('Conectado ao MongoDB com sucesso!'))
 .catch((err)=>console.log(err));
 
+app.get('/', (req, res) => {
+  res.json({ mensagem: 'HidroAPI funcionando' });
+});
+
 app.use('/', routesHidrometro, routesPluviometro, routesTambor);
 
 // roda localmente
