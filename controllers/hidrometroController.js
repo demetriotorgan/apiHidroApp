@@ -13,14 +13,24 @@ module.exports.salvarHidrometro = async(req,res)=>{
     }
 };
 
-module.exports.exibirHidrometros = async(req,res)=>{
-    try {
-        const leituras = await hidrometroModel.find().sort({data:-1}); //Ordem para os mais recentes
-        res.status(200).json(leituras);
-    } catch (error) {
-        console.error('Erro ao buscar registros', error);
-        res.status(500).json({erro:'Erro ao listar leituras'})
-    }
+module.exports.exibirHidrometros = async (req, res) => {
+  try {
+
+    const leituras = await hidrometroModel
+      .find()
+      .sort({ data: -1, horario: -1 });
+
+    res.status(200).json(leituras);
+
+  } catch (error) {
+
+    console.error("Erro ao buscar registros", error);
+
+    res.status(500).json({
+      erro: "Erro ao listar leituras"
+    });
+
+  }
 };
 
 module.exports.deletarHidrometro = async(req,res)=>{
