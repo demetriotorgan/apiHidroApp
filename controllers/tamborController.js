@@ -17,7 +17,7 @@ module.exports.exibirTambores = async(req,res)=>{
     try {
         const leiturasTambor = await tamborModel
             .find()
-            .sort({data:-1});
+            .sort({data:-1, hora: -1});
         res.status(200).json(leiturasTambor);
     } catch (error) {
         console.error('Erro ao buscar registros', error);
