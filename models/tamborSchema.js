@@ -13,16 +13,20 @@ const tamborSchema = new mongoose.Schema({
         type: Number
     },
     recirculacao:{
-        type: Number
+        type: Number,
+        default: 0
     },
     tempoRecirculacao:{
-        type: Number
+        type: Number,
+        default: 0
     },
     filtragem:{
-        type: Boolean        
+        type: Boolean,
+        default: false
     },
     tempoDeFiltragem:{
-        type: Number
+        type: Number,
+        default: 0
     },
     ph:{
         type: Number
@@ -31,16 +35,20 @@ const tamborSchema = new mongoose.Schema({
         type: Number
     },
     acido:{
-        type: Number
+        type: Number,
+        default: 0
     },
     tipoAcido:{
-        type: String
+        type: String,
+        default: "Sem ácido"
     },
     aguaSanitaria:{
-        type: Number
+        type: Number,
+        default: 0
     },
     lavagensDoDia:{
-        type: Number
+        type: Number,
+        default: 0
     },
     cor:{
         type: String,
@@ -53,6 +61,10 @@ const tamborSchema = new mongoose.Schema({
     odor:{
         type: String,
         enum:["semOdor", "leveOdor", "forteOdor"]
+    },
+    obs:{
+        type:String,
+        default: ""
     }
 
 }, {
