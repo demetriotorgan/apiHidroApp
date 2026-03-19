@@ -65,7 +65,13 @@ const tamborSchema = new mongoose.Schema({
     obs:{
         type:String,
         default: ""
-    }
+    },
+    iqa:{
+        type:String
+    },
+    classificacaoIQA:{
+         type:String,
+    },
 
 }, {
     timestamps: true
