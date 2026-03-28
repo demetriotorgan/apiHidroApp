@@ -73,7 +73,7 @@ module.exports.listarEstimativas = async(req,res)=>{
   try {
     const estimativas = await Estimativa
       .find()
-      .sort({dataReferencia: -1 })
+      .sort({createdAt: -1 })
     res.status(200).json(estimativas);
   } catch (error) {
     console.error("Erro ao buscar estimativas", error);
