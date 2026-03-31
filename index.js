@@ -8,6 +8,7 @@ const routesHidrometro = require('./routes/hidrometroRoutes');
 const routesPluviometro = require('./routes/pluviometroRoutes');
 const routesTambor = require('./routes/tamborRoutes');
 const routesEstimativas = require('./routes/estimativaRoutes');
+const routesAnaliseComparacao = require('./routes/analiseComparativaRoutes');
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
   res.json({ mensagem: 'HidroAPI funcionando' });
 });
 
-app.use('/', routesHidrometro, routesPluviometro, routesTambor, routesEstimativas);
+app.use('/', routesHidrometro, routesPluviometro, routesTambor, routesEstimativas,routesAnaliseComparacao);
 
 // rodar local
 if (process.env.NODE_ENV !== 'production') {
