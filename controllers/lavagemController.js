@@ -41,3 +41,19 @@ module.exports.exibirLavagens = async(req,res)=>{
     }
 };
 
+module.exports.deletarLavagem = async(req,res)=>{
+    const {id} = req.params;
+    try {
+        const deletado = await lavagemModel.findByIdAndDelete(id);
+        if(!deletado){
+            return res.status(404).json({erro:'Registro não encontrado'})
+        }
+        res.status(200).json({menssagem:'Lavagem deletada com sucesso', deletado});
+    } catch (error) {
+        console.error('Erro ao deletar leitura: ', error);
+        res.status(500).json({erro:'Erro ao deletar leitura'});
+    }
+};
+
+
+
