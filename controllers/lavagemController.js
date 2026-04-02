@@ -5,6 +5,7 @@ module.exports.salvarLavagem = async(req,res)=>{
         const dados = {
             ...req.body,
             pesoRoupas: Number(req.body.pesoRoupas),
+            enchague: Number(req.body.enchague),
             sabao: Number(req.body.sabao),
             amaciante:Number(req.body.amaciante)
         };

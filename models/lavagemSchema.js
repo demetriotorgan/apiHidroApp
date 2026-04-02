@@ -50,6 +50,10 @@ const lavagemSchema = new mongoose.Schema({
         type: String,
         enum: MODOS_LAVAGEM,
         required: true
+    },
+    enchague:{
+        type: Number,
+        required: true
     }
 
 }, {
