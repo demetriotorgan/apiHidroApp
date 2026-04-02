@@ -26,3 +26,18 @@ module.exports.salvarLavagem = async(req,res)=>{
         });
     }
 };
+
+module.exports.exibirLavagens = async(req,res)=>{
+    try {
+        const registros = await lavagemModel
+        .find()
+        .sort({createdAt:-1});
+        res.status(200).json(registros)
+    } catch (error) {
+        console.error('Erro ao buscar registros de lavagens', error);
+        res.status(500).json({
+            erro:'Erro ao listar registros de lavagens'
+        });
+    }
+};
+
