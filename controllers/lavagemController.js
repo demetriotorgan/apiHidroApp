@@ -6,6 +6,7 @@ module.exports.salvarLavagem = async(req,res)=>{
             ...req.body,
             pesoRoupas: Number(req.body.pesoRoupas),
             enchague: Number(req.body.enchague),
+            litros: Number(req.body.litros),
             sabao: Number(req.body.sabao),
             amaciante:Number(req.body.amaciante)
         };

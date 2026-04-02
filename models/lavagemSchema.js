@@ -33,7 +33,11 @@ const lavagemSchema = new mongoose.Schema({
         enum: NIVEIS_MAQUINA,
         required: true
     },
-
+    litros:{
+        type:Number,
+        required:true,
+        min:0
+    },
     sabao: {
         type: Number,
         required: true,
