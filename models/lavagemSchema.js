@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TIPOS_LAVAGEM = ['leve', 'moderada', 'pesada'];
-const NIVEIS_MAQUINA = ['baixo', 'medio', 'alto'];
+const NIVEIS_MAQUINA = ['extra-baixo','baixo', 'medio', 'alto'];
 const MODOS_LAVAGEM = ['curto', 'normal', 'longo'];
 
 const lavagemSchema = new mongoose.Schema({
