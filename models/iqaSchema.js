@@ -12,21 +12,18 @@ const tamborSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    horaFinal:{
-        type:Date        
+    hidrometroInicial:{
+        type:Number,
+        default:0
     },
     totalDeRecirculação:{
         type:Number,
         default:1
     },
-    tempoRecirculacao:{
-        type: Number,
-        default: 0
-    },    
     ph:{
         type: Number
     },    
-    lavagensDoDia:{
+    lavagensNoDia:{
         type: Number,
         default: 0
     },
@@ -41,18 +38,26 @@ const tamborSchema = new mongoose.Schema({
     odor:{
         type: String,
         enum:["semOdor", "leveOdor", "forteOdor"]
+    },    
+    valorDeiqa:{
+        type:String
     },
     obs:{
         type:String,
         default: ""
     },
-    iqa:{
-        type:String
+    hidrometroFinal:{
+        type:Number,
+        default:0
     },
-    classificacaoIQA:{
-         type:String,
+    horaFinal:{
+        type:Date        
     },
-
+    
+    tempoRecirculacao:{
+        type: Number,
+        default: 0
+    }
 }, {
     timestamps: true
 });
