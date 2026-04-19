@@ -40,7 +40,7 @@ const tamborSchema = new mongoose.Schema({
         enum:["semOdor", "leveOdor", "forteOdor"]
     },    
     valorDeiqa:{
-        type:String,
+        type:Number,
         default:null
     },
     obs:{
