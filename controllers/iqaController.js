@@ -8,7 +8,7 @@ module.exports.salvarIqa = async(req,res)=>{
         console.log(novoIqa);
         res.status(201).json(novoIqa)
     } catch (error) {
-        console.error('Erro ao registrar leitura de IQA: ', error.message)
+        console.error(error);
         res.status(500).json({erro:'Erro ao salvar leitura de IQA'});
     }
 };

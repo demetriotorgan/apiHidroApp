@@ -48,15 +48,16 @@ const tamborSchema = new mongoose.Schema({
     },
     hidrometroFinal:{
         type:Number,
-        default:0
+        default: null
     },
     horaFinal:{
-        type:Date        
+        type:Date,
+        default: null       
     },
     
     tempoRecirculacao:{
         type: Number,
-        default: 0
+         default: null
     }
 }, {
     timestamps: true
