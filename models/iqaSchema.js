@@ -16,7 +16,7 @@ const tamborSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-    totalDeRecirculação:{
+    totalDeRecirculacao:{
         type:Number,
         default:1
     },
