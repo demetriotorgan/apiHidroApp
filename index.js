@@ -13,6 +13,7 @@ const routesLavagens = require('./routes/lavagemRoutes');
 const routesUltimaLeitura = require('./routes/ultimaLeituraRoutes');
 const routesCloracao = require('./routes/cloracaoRoutes');
 const routespH = require('./routes/pHRoutes');
+const routeCicloAnalise = require('./routes/cicloAnaliseRoutes');
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
   res.json({ mensagem: 'HidroAPI funcionando' });
 });
 
-app.use('/', routesHidrometro, routesPluviometro, routesIqa, routesEstimativas, routesAnaliseComparacao, routesLavagens, routesUltimaLeitura,routesCloracao, routespH);
+app.use('/', routesHidrometro, routesPluviometro, routesIqa, routesEstimativas, routesAnaliseComparacao, routesLavagens, routesUltimaLeitura,routesCloracao, routespH, routeCicloAnalise);
 
 // rodar local
 if (process.env.NODE_ENV !== 'production') {
