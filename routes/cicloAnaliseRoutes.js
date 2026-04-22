@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { salvarCicloAnalise, listarCiclosAnalise, ultimoCicloAnalise, ciclosPorPeriodo } = require('../controllers/cicloAnaliseController');
+const { salvarCicloAnalise, listarCiclosAnalise, ultimoCicloAnalise, ciclosPorPeriodo, deletarCicloAnalise } = require('../controllers/cicloAnaliseController');
 const router = Router();
 
 router.post('/ciclos-analise', salvarCicloAnalise);
