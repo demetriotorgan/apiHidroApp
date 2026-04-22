@@ -1,11 +1,17 @@
 const cicloAnaliseModel = require('../models/cicloAnaliseSchema');
 
+function normalizarTendencia(tendencia) {
+  if (tendencia === "superestimando") return "superestimando";
+  if (tendencia === "subestimando") return "subestimando";
+  return "neutra";
+}
+
 module.exports.salvarCicloAnalise = async (req, res) => {
   try {
     const dados = {
       ciclo: {
-        dataInicial: req.body.ciclo?.dataInicial,
-        dataFinal: req.body.ciclo?.dataFinal
+        dataInicial: new Date(req.body.ciclo?.dataInicial),
+        dataFinal: new Date(req.body.ciclo?.dataFinal)
       },
 
       consumo: {
@@ -22,22 +28,24 @@ module.exports.salvarCicloAnalise = async (req, res) => {
         BIAS: Number(req.body.metricas?.BIAS)
       },
 
-      tendencia: req.body.tendencia,
+      tendencia: normalizarTendencia(req.body.tendencia),
 
       coeficiente: {
         anterior: Number(req.body.coeficiente?.anterior),
         sugerido: Number(req.body.coeficiente?.sugerido)
       },
 
-      timestamp: req.body.timestamp || new Date()
+      timestamp: req.body.timestamp ? new Date(req.body.timestamp) : new Date()
     };
+
+    console.log("📦 Dados normalizados:", dados);
 
     const novoCiclo = await cicloAnaliseModel.create(dados);
 
     return res.status(201).json(novoCiclo);
 
   } catch (error) {
-    console.error('Erro ao salvar ciclo de análise:', error);
+    console.error('❌ Erro ao salvar ciclo de análise:', error);
 
     return res.status(500).json({
       erro: 'Erro ao salvar ciclo de análise',
