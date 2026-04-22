@@ -116,3 +116,37 @@ module.exports.ciclosPorPeriodo = async (req, res) => {
     });
   }
 };
+
+module.exports.deletarCicloAnalise = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // validação simples do ID
+    if (!id) {
+      return res.status(400).json({
+        erro: 'ID do ciclo não informado'
+      });
+    }
+
+    const cicloDeletado = await cicloAnaliseModel.findByIdAndDelete(id);
+
+    if (!cicloDeletado) {
+      return res.status(404).json({
+        erro: 'Ciclo de análise não encontrado'
+      });
+    }
+
+    return res.status(200).json({
+      mensagem: 'Ciclo de análise deletado com sucesso',
+      ciclo: cicloDeletado
+    });
+
+  } catch (error) {
+    console.error('Erro ao deletar ciclo de análise:', error);
+
+    return res.status(500).json({
+      erro: 'Erro ao deletar ciclo de análise',
+      detalhe: error.message
+    });
+  }
+};

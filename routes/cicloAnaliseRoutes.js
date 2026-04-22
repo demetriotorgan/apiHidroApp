@@ -6,5 +6,6 @@ router.post('/ciclos-analise', salvarCicloAnalise);
 router.get('/ciclos-analise', listarCiclosAnalise);
 router.get('/ciclos-analise/ultimo', ultimoCicloAnalise);
 router.get('/ciclos-analise/periodo', ciclosPorPeriodo);
+router.delete('/ciclos-analise/:id', deletarCicloAnalise);
 
 module.exports = router;
