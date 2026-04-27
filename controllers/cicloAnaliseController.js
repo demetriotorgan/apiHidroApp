@@ -6,60 +6,101 @@ function normalizarTendencia(tendencia) {
   return "neutra";
 }
 
+// 🔒 INSPEÇÃO DE QUALIDADE
+function validarPayload(body) {
+  const erros = [];
+
+  if (!body?.ciclo?.dataInicial) erros.push("ciclo.dataInicial obrigatório");
+  if (!body?.ciclo?.dataFinal) erros.push("ciclo.dataFinal obrigatório");
+
+  if (body?.consumo?.real == null) erros.push("consumo.real obrigatório");
+  if (body?.consumo?.previsto == null) erros.push("consumo.previsto obrigatório");
+  if (body?.consumo?.erro == null) erros.push("consumo.erro obrigatório");
+  if (body?.consumo?.erroPercentual == null) erros.push("consumo.erroPercentual obrigatório");
+
+  if (body?.metricas?.MAE == null) erros.push("metricas.MAE obrigatório");
+  if (body?.metricas?.RMSE == null) erros.push("metricas.RMSE obrigatório");
+  if (body?.metricas?.MAPE == null) erros.push("metricas.MAPE obrigatório");
+  if (body?.metricas?.BIAS == null) erros.push("metricas.BIAS obrigatório");
+
+  if (!body?.tendencia) erros.push("tendencia obrigatória");
+
+  if (body?.coeficiente?.anterior == null) erros.push("coeficiente.anterior obrigatório");
+  if (body?.coeficiente?.sugerido == null) erros.push("coeficiente.sugerido obrigatório");
+
+  return erros;
+}
+
 module.exports.salvarCicloAnalise = async (req, res) => {
   try {
+    // 🔍 1. INSPEÇÃO DE QUALIDADE
+    const erros = validarPayload(req.body);
+
+    if (erros.length > 0) {
+      return res.status(400).json({
+        erro: "Payload inválido",
+        detalhes: erros
+      });
+    }
+
+    // 🔧 2. NORMALIZAÇÃO CONTROLADA
     const dados = {
       ciclo: {
-        dataInicial: new Date(req.body.ciclo?.dataInicial),
-        dataFinal: new Date(req.body.ciclo?.dataFinal)
+        dataInicial: new Date(req.body.ciclo.dataInicial),
+        dataFinal: new Date(req.body.ciclo.dataFinal)
       },
 
       consumo: {
-        real: Number(req.body.consumo?.real),
-        previsto: Number(req.body.consumo?.previsto),
-        erro: Number(req.body.consumo?.erro),
-        erroPercentual: Number(req.body.consumo?.erroPercentual)
+        real: Number(req.body.consumo.real),
+        previsto: Number(req.body.consumo.previsto),
+        erro: Number(req.body.consumo.erro),
+        erroPercentual: Number(req.body.consumo.erroPercentual)
       },
 
       metricas: {
-        MAE: Number(req.body.metricas?.MAE),
-        RMSE: Number(req.body.metricas?.RMSE),
-        MAPE: Number(req.body.metricas?.MAPE),
-        BIAS: Number(req.body.metricas?.BIAS)
+        MAE: Number(req.body.metricas.MAE),
+        RMSE: Number(req.body.metricas.RMSE),
+        MAPE: Number(req.body.metricas.MAPE),
+        BIAS: Number(req.body.metricas.BIAS)
       },
 
       tendencia: normalizarTendencia(req.body.tendencia),
 
       coeficiente: {
-        anterior: Number(req.body.coeficiente?.anterior),
-        sugerido: Number(req.body.coeficiente?.sugerido)
+        anterior: Number(req.body.coeficiente.anterior),
+        sugerido: Number(req.body.coeficiente.sugerido)
       },
 
       timestamp: new Date()
     };
 
+    // 🔑 3. CHAVE ÚNICA (controle de duplicidade)
     const filtro = {
       "ciclo.dataInicial": dados.ciclo.dataInicial,
       "ciclo.dataFinal": dados.ciclo.dataFinal
     };
 
-    const atualizado = await cicloAnaliseModel.findOneAndUpdate(
+    // 💾 4. UPSERT CONTROLADO
+    const resultado = await cicloAnaliseModel.findOneAndUpdate(
       filtro,
       dados,
       {
         new: true,
-        upsert: true, // 🔥 AQUI está o pulo do gato
+        upsert: true,
         setDefaultsOnInsert: true
       }
     );
 
-    return res.status(200).json(atualizado);
+    return res.status(200).json({
+      mensagem: "Ciclo salvo com sucesso",
+      dados: resultado
+    });
 
   } catch (error) {
-    console.error('❌ Erro ao salvar ciclo de análise:', error);
+    console.error("❌ Erro ao salvar ciclo de análise:", error);
 
     return res.status(500).json({
-      erro: 'Erro ao salvar ciclo de análise',
+      erro: "Erro interno ao salvar ciclo de análise",
       detalhe: error.message
     });
   }
