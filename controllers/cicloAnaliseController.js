@@ -158,3 +158,24 @@ module.exports.deletarCicloAnalise = async (req, res) => {
     });
   }
 };
+
+//deletar lista salva de ciclos (CUIDADO!!!!)
+module.exports.limparCiclosAnalise = async (req, res) => {
+  try {
+
+    const resultado = await cicloAnaliseModel.deleteMany({});
+
+    return res.status(200).json({
+      mensagem: 'Todos os ciclos de análise foram deletados com sucesso',
+      totalDeletados: resultado.deletedCount
+    });
+
+  } catch (error) {
+    console.error('Erro ao limpar ciclos de análise:', error);
+
+    return res.status(500).json({
+      erro: 'Erro ao limpar ciclos de análise',
+      detalhe: error.message
+    });
+  }
+};
