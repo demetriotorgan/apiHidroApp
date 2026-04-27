@@ -35,14 +35,25 @@ module.exports.salvarCicloAnalise = async (req, res) => {
         sugerido: Number(req.body.coeficiente?.sugerido)
       },
 
-      timestamp: req.body.timestamp ? new Date(req.body.timestamp) : new Date()
+      timestamp: new Date()
     };
 
-    console.log("📦 Dados normalizados:", dados);
+    const filtro = {
+      "ciclo.dataInicial": dados.ciclo.dataInicial,
+      "ciclo.dataFinal": dados.ciclo.dataFinal
+    };
 
-    const novoCiclo = await cicloAnaliseModel.create(dados);
+    const atualizado = await cicloAnaliseModel.findOneAndUpdate(
+      filtro,
+      dados,
+      {
+        new: true,
+        upsert: true, // 🔥 AQUI está o pulo do gato
+        setDefaultsOnInsert: true
+      }
+    );
 
-    return res.status(201).json(novoCiclo);
+    return res.status(200).json(atualizado);
 
   } catch (error) {
     console.error('❌ Erro ao salvar ciclo de análise:', error);
@@ -58,7 +69,7 @@ module.exports.listarCiclosAnalise = async (req, res) => {
   try {
     const ciclos = await cicloAnaliseModel
       .find()
-      .sort({ timestamp: -1 }); // mais recente primeiro
+      .sort({ "ciclo.dataFinal": -1 }); // ordenação lógica do ciclo
 
     return res.status(200).json(ciclos);
 

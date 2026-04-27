@@ -94,4 +94,9 @@ const cicloAnaliseSchema = new mongoose.Schema({
     }
 });
 
+cicloAnaliseSchema.index(
+  { "ciclo.dataInicial": 1, "ciclo.dataFinal": 1 },
+  { unique: true }
+);
+
 module.exports = mongoose.model('CicloAnalise', cicloAnaliseSchema);
