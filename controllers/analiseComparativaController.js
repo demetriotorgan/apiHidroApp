@@ -96,38 +96,39 @@ module.exports.salvarAnaliseComparativa = async (req, res) => {
 
 module.exports.listarAnalisesComparativas = async (req, res) => {
     try {
-        // 📌 Query params opcionais
-        const { dataInicial, dataFinal, limit = 50 } = req.query;
+        const { dataInicial, dataFinal, limit } = req.query;
 
-        // 🔎 Filtro dinâmico
         const filtro = {};
 
+        // 🔎 Filtro por eixo temporal real do dataset2: dataFinal
         if (dataInicial || dataFinal) {
-            filtro["periodo.dataInicial"] = {};
+            filtro["periodo.dataFinal"] = {};
 
             if (dataInicial) {
-                filtro["periodo.dataInicial"].$gte = dataInicial;
+                filtro["periodo.dataFinal"].$gte = dataInicial;
             }
 
             if (dataFinal) {
-                filtro["periodo.dataInicial"].$lte = dataFinal;
+                filtro["periodo.dataFinal"].$lte = dataFinal;
             }
         }
 
-        // 📊 Busca no banco
-        const analises = await AnaliseComparativaModel
+        let query = AnaliseComparativaModel
             .find(filtro)
-            .sort({ dataCriacao: -1 }) // mais recentes primeiro
-            .limit(Number(limit));
+            .sort({ dataCriacao: -1 });
 
-        // 📭 Caso vazio
+        if (limit) {
+            query = query.limit(Number(limit));
+        }
+
+        const analises = await query;
+
         if (!analises || analises.length === 0) {
             return res.status(404).json({
                 mensagem: 'Nenhuma análise encontrada'
             });
         }
 
-        // ✅ Sucesso
         res.status(200).json({
             total: analises.length,
             dados: analises
