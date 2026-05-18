@@ -114,3 +114,18 @@ module.exports.listarDadosML = async (req, res) => {
     });
   }
 };
+
+//Deletar registro de ML
+module.exports.deletarRegistroML = async(req,res)=>{
+  const {id} = req.params;
+  try {
+    const deletado = await DadosML.findByIdAndDelete(id);
+      if(!deletado){
+        return res.status(404).json({erro:'Registro não encontrado'})
+      }
+      res.status(200).json({menssagem:'Registro de ML deletado com sucesso', deletado});
+  } catch (error) {
+    console.error('Erro ao deletar registro de ML: ', error);
+    res.status(500).json({erro:'Erro ao deletar registro de ML'});
+  }
+};
