@@ -88,3 +88,29 @@ module.exports.salvarDadosML = async (req, res) => {
     });
   }
 };
+
+/**
+ * Lista todos os snapshots de dados de ML.
+ * Ordena pela data mais recente primeiro.
+ */
+module.exports.listarDadosML = async (req, res) => {
+  try {
+    const registros = await DadosML.find()
+      .sort({ data: -1 }) // mais recentes primeiro
+      .lean();
+
+    return res.status(200).json({
+      sucesso: true,
+      total: registros.length,
+      dados: registros,
+    });
+  } catch (error) {
+    console.error("Erro ao listar dados de ML:", error.message);
+
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao listar os dados de ML.",
+      erro: error.message,
+    });
+  }
+};
